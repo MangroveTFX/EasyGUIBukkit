@@ -15,7 +15,7 @@ public abstract class GUI {
     protected String INV_NAME;
     protected int INV_ROWS;
 
-    public abstract void onClick(Player p, int slot, ItemStack clicked, Inventory inv, Main plugin);
+    public abstract void onClick(Player p, int slot, ItemStack clicked, Inventory inv);
 
     public static List<GUI> getGuis() {
         return Guis;

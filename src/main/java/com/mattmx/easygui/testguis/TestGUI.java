@@ -37,7 +37,7 @@ public class TestGUI extends GUI {
     }
 
     @Override
-    public void onClick(Player p, int slot, ItemStack clicked, Inventory inv, Main plugin) {
+    public void onClick(Player p, int slot, ItemStack clicked, Inventory inv) {
         if (Utils.isItemName(clicked, "&7MattMX's &b&oEasyGUI")) {
             p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_CHIME, 1.0f, 1.0f);
             p.sendMessage(Utils.chat(Main.PREFIX + "MattMX's EasyGUI"));

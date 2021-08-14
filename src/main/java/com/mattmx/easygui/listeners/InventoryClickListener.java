@@ -24,7 +24,7 @@ public class InventoryClickListener implements Listener {
                 if (e.getCurrentItem() == null) {
                     return;
                 }
-                gui.onClick((Player) e.getWhoClicked(), e.getSlot(), e.getCurrentItem(), e.getInventory(), plugin);
+                gui.onClick((Player) e.getWhoClicked(), e.getSlot(), e.getCurrentItem(), e.getInventory());
             }
         }
     }
