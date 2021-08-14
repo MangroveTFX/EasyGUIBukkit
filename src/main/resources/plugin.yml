@@ -1,0 +1,7 @@
+name: EasyGUI
+version: ${project.version}
+main: com.mattmx.easygui.Main
+api-version: 1.15
+commands:
+  easygui:
+    description: Test gui
