@@ -25,7 +25,7 @@ public abstract class GUI {
         return this.INV_NAME;
     }
 
-    protected Inventory getInv() {
+    public Inventory getInv() {
         return INVENTORY;
     }
 
