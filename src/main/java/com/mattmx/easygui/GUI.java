@@ -29,6 +29,22 @@ public abstract class GUI {
         return INVENTORY;
     }
 
+    public int getRows() {
+        return INV_ROWS;
+    }
+
+    public String getInvName() {
+        return INV_NAME;
+    }
+
+    public void setRows(int i) {
+        INV_ROWS = i;
+    }
+
+    public void setInvName(String str) {
+        INV_NAME = str;
+    }
+
     protected void init(String title, int rows, GUI gui) {
         registerGUI(gui);
         this.INV_NAME = Utils.chat(title);
