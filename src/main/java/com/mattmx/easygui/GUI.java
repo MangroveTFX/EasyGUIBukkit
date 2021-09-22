@@ -3,6 +3,7 @@ package com.mattmx.easygui;
 import com.mattmx.easygui.listeners.InventoryClickListener;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -15,7 +16,7 @@ public abstract class GUI {
     protected String INV_NAME;
     protected int INV_ROWS;
 
-    public abstract void onClick(Player p, int slot, ItemStack clicked, Inventory inv);
+    public abstract void onClick(Player p, int slot, ItemStack clicked, Inventory inv, InventoryClickEvent event);
 
     public static List<GUI> getGuis() {
         return Guis;

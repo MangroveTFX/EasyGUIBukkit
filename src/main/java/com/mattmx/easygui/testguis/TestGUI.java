@@ -6,6 +6,7 @@ import com.mattmx.easygui.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -37,7 +38,7 @@ public class TestGUI extends GUI {
     }
 
     @Override
-    public void onClick(Player p, int slot, ItemStack clicked, Inventory inv) {
+    public void onClick(Player p, int slot, ItemStack clicked, Inventory inv, InventoryClickEvent event) {
         if (Utils.isItemName(clicked, "&7MattMX's &b&oEasyGUI")) {
             p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_CHIME, 1.0f, 1.0f);
             p.sendMessage(Utils.chat(Main.PREFIX + "MattMX's EasyGUI"));
