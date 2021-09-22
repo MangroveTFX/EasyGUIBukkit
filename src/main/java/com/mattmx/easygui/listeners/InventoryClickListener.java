@@ -20,7 +20,7 @@ public class InventoryClickListener implements Listener {
         String title = e.getView().getTitle();
         for (GUI gui : GUI.getGuis()) {
             if (gui.getTitle().equalsIgnoreCase(title)) {
-                e.setCancelled(true);
+                //e.setCancelled(true);
                 if (e.getCurrentItem() == null) {
                     return;
                 }
