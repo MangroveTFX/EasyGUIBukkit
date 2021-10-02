@@ -1,7 +1,6 @@
 package com.mattmx.easygui.testguis;
 
 import com.mattmx.easygui.Main;
-import com.mattmx.easygui.testguis.RegisterTestGuis;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -20,7 +19,8 @@ public class TestCommand implements CommandExecutor {
             return true;
         } else {
             Player p = (Player) sender;
-            p.openInventory(RegisterTestGuis.TEST_GUI.getGui());
+            TestGUI menu = new TestGUI(p.getUniqueId());
+            menu.open(p.getUniqueId());
         }
         return false;
     }

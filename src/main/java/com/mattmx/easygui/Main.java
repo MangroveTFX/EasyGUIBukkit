@@ -1,6 +1,5 @@
 package com.mattmx.easygui;
 
-import com.mattmx.easygui.testguis.RegisterTestGuis;
 import com.mattmx.easygui.testguis.TestCommand;
 import org.bukkit.plugin.java.JavaPlugin;
 

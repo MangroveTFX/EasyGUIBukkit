@@ -1,61 +1,118 @@
 package com.mattmx.easygui.testguis;
 
 import com.mattmx.easygui.GUI;
+import com.mattmx.easygui.ItemBuilder;
 import com.mattmx.easygui.Main;
 import com.mattmx.easygui.Utils;
+import com.mattmx.easygui.listeners.Listeners;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.UUID;
+
 public class TestGUI extends GUI {
 
-    private Main plugin;
+    UUID ownerID;
+    Inventory INV;
 
-    public TestGUI(Main plugin) {
-        this.init(Utils.chat(Main.PREFIX + "Example Menu"), 5 * 9, this);
-        this.plugin = plugin;
+    public TestGUI(UUID id) {
+        ownerID = id;
+        init();
     }
 
-    public Inventory getGui() {
-        Inventory toReturn = Bukkit.getServer().createInventory(null, INV_ROWS, INV_NAME);
-        Utils.createItem(getInv(), "diamond_sword", 1, 5, "&7MattMX's &b&oEasyGUI", "&8&oVersion 1.0");
-        Utils.createItem(getInv(), "compass", 1, 23, "&7Website", "&8&oClick for link");
-        Utils.createItem(getInv(), "arrow", 1, 36, "&7&oNext Page");
-        Utils.createItem(getInv(), "gray_stained_glass_pane", 1, 37, " ");
-        Utils.createItem(getInv(), "gray_stained_glass_pane", 1, 38, " ");
-        Utils.createItem(getInv(), "gray_stained_glass_pane", 1, 39, " ");
-        Utils.createItem(getInv(), "gray_stained_glass_pane", 1, 40, " ");
-        Utils.createItem(getInv(), "gray_stained_glass_pane", 1, 41, " ");
-        Utils.createItem(getInv(), "gray_stained_glass_pane", 1, 42, " ");
-        Utils.createItem(getInv(), "gray_stained_glass_pane", 1, 43, " ");
-        Utils.createItem(getInv(), "gray_stained_glass_pane", 1, 44, " ");
-        Utils.createItem(getInv(), "barrier", 1, 45, "&cClose Menu");
-        toReturn.setContents(getInv().getContents());
-        return toReturn;
+    public void init() {
+        INV = Bukkit.createInventory(null, 54, Utils.chat("&c&oKit Menu"));
+        ItemBuilder chest = new ItemBuilder(Material.CHEST)
+                .lore(new String[] {
+                        Utils.chat("&cRight-click &fTo view kit"),
+                        Utils.chat("&cLeft-click &fTo receive kit")
+                });
+        ItemBuilder echest = new ItemBuilder(Material.ENDER_CHEST)
+                .lore(new String[] {
+                        Utils.chat("&cRight-click &fTo view EChest"),
+                        Utils.chat("&cLeft-click &fTo load EChest")
+                });
+        Player p = Bukkit.getPlayer(ownerID);
+        for (int i = 0; i < 9; i++) {
+            if (p.hasPermission("pk.kit." + (i + 1))) {
+                INV.setItem(i + 18, chest
+                        .name(Utils.chat("&cKit &f" + (i + 1)))
+                        .amount(i + 1)
+                        .make());
+            } else {
+                INV.setItem(i + 18, chest
+                        .name(Utils.chat("&cKit &f" + (i + 1)))
+                        .clearLores()
+                        .lores(new String[] {
+                                Utils.chat("&cLOCKED"),
+                                Utils.chat("&fYou &cdon't &fhave perms for this kit.")
+                        })
+                        .amount(i + 1)
+                        .make());
+            }
+
+            if (p.hasPermission("pk.ec." + (i + 1))) {
+                INV.setItem(i + 27, echest
+                        .name(Utils.chat("&cEChest &f" + (i + 1)))
+                        .amount(i + 1)
+                        .make());
+            } else {
+                INV.setItem(i + 18, echest
+                        .name(Utils.chat("&cEChest &f" + (i + 1)))
+                        .clearLores()
+                        .lores(new String[] {
+                                Utils.chat("&cLOCKED"),
+                                Utils.chat("&fYou &cdon't &fhave perms for this echest.")
+                        })
+                        .amount(i + 1)
+                        .make());
+            }
+        }
+        ItemBuilder star = new ItemBuilder(Material.NETHER_STAR)
+                .lore(Utils.chat("&6Kit creator menu"))
+                .amount(1)
+                .name(Utils.chat("&cKit creator"));
+        INV.setItem(49, star.make());
+        ItemBuilder earthSkull = new ItemBuilder(Material.PLAYER_HEAD)
+                .skullOwner("Earth2Bets")
+                .name(Utils.chat("&cPublic kits"));
+        INV.setItem(53, earthSkull.make());
     }
 
     @Override
-    public void onClick(Player p, int slot, ItemStack clicked, Inventory inv, InventoryClickEvent event) {
-        if (Utils.isItemName(clicked, "&7MattMX's &b&oEasyGUI")) {
-            p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_CHIME, 1.0f, 1.0f);
-            p.sendMessage(Utils.chat(Main.PREFIX + "MattMX's EasyGUI"));
-            return;
-        }else if (Utils.isItemName(clicked, "&7Website")) {
-            p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_CHIME, 1.0f, 1.0f);
-            p.sendMessage(Utils.chat(Main.PREFIX + "&nhttps://www.mattmx.com/"));
-            return;
-        }else if (Utils.isItemName(clicked, "&cClose Menu")) {
-            p.playSound(p.getLocation(), Sound.BLOCK_STONE_PRESSURE_PLATE_CLICK_OFF, 1.0f, 1.0f);
-            p.closeInventory();
-            return;
-        }else if (Utils.isItemName(clicked, "&7&oNext Page")) {
-            p.playSound(p.getLocation(), Sound.BLOCK_STONE_PRESSURE_PLATE_CLICK_OFF, 1.0f, 1.0f);
-            p.openInventory(RegisterTestGuis.ANOTHER_TEST_GUI.getGui());
-            return;
+    public void setPage(int page) {
+
+    }
+
+    @Override
+    public void open(UUID id) {
+        Bukkit.getPlayer(id).openInventory(INV);
+        Listeners.INVS.put(id, this);
+    }
+
+    @Override
+    public void click(UUID clickerID, InventoryClickEvent e) {
+        Player p = Bukkit.getPlayer(clickerID);
+        if (e.getClick().isLeftClick()) {
+            p.sendMessage("Left clicked");
+        } else {
+            p.sendMessage("Right clicked");
         }
-        p.openInventory(this.getGui());
+
+        // Open kit creator menu
+        if (e.getCurrentItem().getType() == Material.NETHER_STAR) {
+            close(clickerID);
+        }
+        e.setCancelled(true);
+    }
+
+    @Override
+    public void close(UUID closerID) {
+        Listeners.INVS.remove(closerID);
     }
 }

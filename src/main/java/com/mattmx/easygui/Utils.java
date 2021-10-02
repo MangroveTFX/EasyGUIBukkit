@@ -13,13 +13,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Utils {
-    public static void wait(int milli) {
-        try {
-            Thread.sleep(milli*1000);
-        } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
-        };
-    }
     private static final Pattern pattern = Pattern.compile("#[a-fA-F0-9]{6}");
     public static String chat (String s) {
         if (Bukkit.getVersion().contains("1.16")) {
@@ -32,41 +25,5 @@ public class Utils {
         }
         return ChatColor.translateAlternateColorCodes('&', s);
 
-    }
-    public static ItemStack createItem(Inventory inv, String materialString, int amount, int invSlot, String displayName, String... loreString) {
-        ItemStack item;
-        List<String> lore=new ArrayList();
-        item=new ItemStack(Material.matchMaterial(materialString),amount);
-        ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(Utils.chat(displayName));
-        for (String s : loreString) {
-            lore.add(Utils.chat(s));
-
-        }
-        meta.setLore(lore);
-        item.setItemMeta(meta);
-        inv.setItem(invSlot-1, item);
-        return item;
-
-    }
-    public static ItemStack createItemByte(Inventory inv, String materialString, int byteId, int amount, int invSlot, String displayName, String... loreString) {
-        ItemStack item;
-        List<String> lore=new ArrayList();
-        item = new ItemStack(Material.matchMaterial(materialString),amount,(short) byteId);
-        ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(Utils.chat(displayName));
-        for (String s : loreString) {
-            lore.add(Utils.chat(s));
-
-        }
-        meta.setLore(lore);
-        item.setItemMeta(meta);
-        inv.setItem(invSlot-1, item);
-        return item;
-
-    }
-
-    public static boolean isItemName(ItemStack clicked, String match) {
-        return clicked.getItemMeta().getDisplayName().equalsIgnoreCase(chat(match));
     }
 }
